@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Trainer Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="setup-screen" class="card">
+        <h1>🧠 Treino Mental</h1>
+
+        <div class="grid-layout">
+            <div class="section">
+                <h3>Operações</h3>
+                <div class="checkbox-group">
+                    <label class="check-box"><input type="checkbox" id="op-add" checked> <span>+</span></label>
+                    <label class="check-box"><input type="checkbox" id="op-sub"> <span>−</span></label>
+                    <label class="check-box"><input type="checkbox" id="op-mul"> <span>×</span></label>
+                    <label class="check-box"><input type="checkbox" id="op-div"> <span>÷</span></label>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Intervalo dos Números</h3>
+                <div class="range-group">
+                    <div class="input-wrapper">
+                        <span>X:</span>
+                        <input type="number" id="x-min" value="1">
+                        <span class="sep">até</span>
+                        <input type="number" id="x-max" value="50">
+                    </div>
+                    <div class="input-wrapper">
+                        <span>Y:</span>
+                        <input type="number" id="y-min" value="1">
+                        <span class="sep">até</span>
+                        <input type="number" id="y-max" value="50">
+                    </div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="allow-decimals">
+                    <span class="slider"></span>
+                    <span class="label-text">Permitir Decimais</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="section controls-section">
+            <div class="control-block">
+                <h3>Meta (Opcional)</h3>
+                <input type="number" id="target-score" placeholder="Ex: 20 contas" class="full-input">
+                <small>Deixe vazio para modo infinito (Time Attack)</small>
+            </div>
+
+            <div class="control-block">
+                <h3>Tempo Limite</h3>
+                <div class="timer-options">
+                    <button class="time-btn" data-time="30">30s</button>
+                    <button class="time-btn selected" data-time="60">60s</button>
+                    <button class="time-btn" data-time="300">5min</button>
+                    <button class="time-btn" data-time="99999">∞</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="start-btn" class="glow-btn">INICIAR TREINO</button>
+    </div>
+
+    <div id="game-screen" class="container hidden">
+        <div id="progress-container" class="hidden">
+            <div id="progress-bar"></div>
+        </div>
+
+        <div class="hud">
+            <div class="hud-item">⏱ <span id="time-left">00</span>s</div>
+            <div class="hud-item">✅ <span id="score">0</span><span id="score-target" class="faded"></span></div>
+        </div>
+
+        <div class="game-area">
+            <div id="question-display">Preparar...</div>
+            <input type="number" id="answer-input" autocomplete="off" step="0.1" placeholder="?">
+        </div>
+        
+        <button id="stop-btn" class="outline-btn">Parar</button>
+    </div>
+
+    <div id="stats-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>🎉 Treino Concluído!</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Acertos</span>
+                    <span class="stat-value" id="final-score">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Velocidade Média</span>
+                    <span class="stat-value" id="avg-speed">0s</span>
+                </div>
+            </div>
+            
+            <h3>🐌 Contas mais lentas (>5s):</h3>
+            <ul id="slow-list"></ul>
+            
+            <button id="restart-btn" class="glow-btn">Novo Treino</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
