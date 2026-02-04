@@ -10,7 +10,7 @@
     /* Cores dos Inputs (Claro) */
     --input-bg: #f1f2f6;
     --input-border: #dfe6e9;
-    --input-text: #2d3436; /* Cinza escuro */
+    --input-text: #2d3436;
     
     --success: #00b894;
     --danger: #ff7675;
@@ -29,10 +29,10 @@ body.dark-mode {
     /* Pedido: Fundo Azul Escuro + Texto Laranja */
     --input-bg: #132535; 
     --input-border: #2c3e50;
-    --input-text: #ff9f43; /* Laranja vibrante */
+    --input-text: #ff9f43;
 
     --danger: #ff6b6b;
-    --accent: #ff9f43; /* Accent vira laranja também */
+    --accent: #ff9f43;
 }
 
 * { box-sizing: border-box; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
@@ -100,7 +100,7 @@ h3 { color: var(--text-light); font-size: 0.9rem; text-transform: uppercase; let
 .input-wrapper input {
     border: none; background: transparent; width: 60px; text-align: center;
     font-size: 1.1rem; font-weight: 800; 
-    color: var(--input-text); /* Aqui entra o Laranja no Dark Mode */
+    color: var(--input-text);
     border-bottom: 2px solid var(--input-border);
 }
 .input-wrapper input:focus { outline: none; border-bottom-color: var(--primary); }
@@ -150,20 +150,30 @@ h3 { color: var(--text-light); font-size: 0.9rem; text-transform: uppercase; let
 }
 .outline-btn:hover { border-color: var(--danger); color: var(--danger); background: rgba(255,0,0,0.05); }
 
+/* Footer Credit (by WL) */
+.footer-credit {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-light);
+    opacity: 0.6;
+    letter-spacing: 1px;
+    user-select: none; /* Não deixa selecionar o texto para ficar com cara de app */
+}
+
 /* Jogo */
 .hud { display: flex; justify-content: space-between; font-size: 1.5rem; font-weight: 700; color: var(--text-light); margin-bottom: 2rem; }
 #question-display {
     font-size: 4rem; font-weight: 800; color: var(--secondary); 
     margin-bottom: 1rem; text-align: center;
 }
-/* No dark mode, a pergunta deve destacar */
 body.dark-mode #question-display { color: white; }
 
 #answer-input {
     width: 100%; font-size: 3rem; text-align: center; border: none; 
     background: transparent; border-bottom: 4px solid var(--input-border);
     color: var(--input-text); padding-bottom: 10px;
-    /* O placeholder fica um pouco mais claro que o laranja para não confundir */
 }
 #answer-input::placeholder { color: var(--text-light); opacity: 0.3; }
 #answer-input:focus { outline: none; border-bottom-color: var(--accent); }
