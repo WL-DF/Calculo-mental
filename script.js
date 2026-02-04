@@ -30,7 +30,7 @@ const restartBtn = document.getElementById('restart-btn');
 // --- Estado ---
 let config = {
     duration: 60,
-    targetScore: 0, // 0 = sem meta (infinito)
+    targetScore: 0,
     ops: [],
     xRange: [1, 50],
     yRange: [1, 50],
@@ -48,7 +48,7 @@ let gameState = {
 
 // --- Configuração ---
 
-// Timer Seleção
+// Timer
 timeBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         timeBtns.forEach(b => b.classList.remove('selected'));
@@ -66,19 +66,18 @@ document.getElementById('start-btn').addEventListener('click', () => {
     if (document.getElementById('op-mul').checked) config.ops.push('*');
     if (document.getElementById('op-div').checked) config.ops.push('/');
 
-    if (config.ops.length === 0) return alert("Selecione uma operação!");
+    if (config.ops.length === 0) return alert("Selecione pelo menos uma operação!");
 
     // 2. Ranges e Meta
     config.xRange = [parseFloat(xMinInput.value), parseFloat(xMaxInput.value)];
     config.yRange = [parseFloat(yMinInput.value), parseFloat(yMaxInput.value)];
     config.decimals = decimalsCheck.checked;
     
-    // Ler meta de questões (se vazio ou 0, vira 0)
     let metaVal = parseInt(targetScoreInput.value);
     config.targetScore = isNaN(metaVal) ? 0 : metaVal;
 
     if (config.xRange[0] >= config.xRange[1] || config.yRange[0] >= config.yRange[1]) {
-        return alert("Mínimo deve ser menor que Máximo.");
+        return alert("O valor Mínimo deve ser menor que o Máximo.");
     }
 
     startGame();
@@ -93,7 +92,6 @@ function startGame() {
     
     scoreDisplay.innerText = "0";
     
-    // Configura UI da Meta
     if (config.targetScore > 0) {
         scoreTargetDisplay.innerText = ` / ${config.targetScore}`;
         progressContainer.classList.remove('hidden');
@@ -103,7 +101,6 @@ function startGame() {
         progressContainer.classList.add('hidden');
     }
 
-    // Configura Timer
     if (config.duration >= 99999) {
         timeDisplay.innerText = "∞";
     } else {
@@ -160,9 +157,8 @@ function generateQuestion() {
     gameState.currentAnswer = correctA.toString();
     questionDisplay.innerText = displayQ;
     
-    // Animação leve ao trocar
     questionDisplay.classList.remove('pop-anim');
-    void questionDisplay.offsetWidth; // trigger reflow
+    void questionDisplay.offsetWidth; 
     questionDisplay.classList.add('pop-anim');
 
     gameState.questionStartTime = Date.now();
@@ -179,7 +175,6 @@ function fixNum(num) {
     return config.decimals ? parseFloat(num.toFixed(1)) : Math.round(num);
 }
 
-// Input Listener
 answerInput.addEventListener('input', (e) => {
     if (e.target.value === gameState.currentAnswer) {
         handleCorrectAnswer();
@@ -191,7 +186,6 @@ function handleCorrectAnswer() {
     scoreDisplay.innerText = gameState.score;
     updateProgress();
 
-    // Stats
     const timeTaken = (Date.now() - gameState.questionStartTime) / 1000;
     gameState.history.push({
         question: questionDisplay.innerText,
@@ -199,7 +193,6 @@ function handleCorrectAnswer() {
         time: timeTaken
     });
 
-    // Checar Meta
     if (config.targetScore > 0 && gameState.score >= config.targetScore) {
         endGame();
         return;
@@ -215,23 +208,21 @@ function endGame() {
     
     finalScoreEl.innerText = gameState.score;
     
-    // Calcular velocidade média
     let totalTime = gameState.history.reduce((acc, cur) => acc + cur.time, 0);
     let avg = gameState.score > 0 ? (totalTime / gameState.score).toFixed(2) : "0.00";
     avgSpeedEl.innerText = `${avg}s`;
 
-    // Lista de Lentos
     const slowOnes = gameState.history.filter(h => h.time > 5);
     slowListEl.innerHTML = "";
     
     if (slowOnes.length === 0 && gameState.history.length > 0) {
-        slowListEl.innerHTML = "<li>⚡ Você foi rápido em todas!</li>";
+        slowListEl.innerHTML = "<li>⚡ Rápido como um raio!</li>";
     } else if (gameState.history.length === 0) {
-        slowListEl.innerHTML = "<li>Nada respondido.</li>";
+        slowListEl.innerHTML = "<li>Nenhuma conta resolvida.</li>";
     } else {
         slowOnes.forEach(item => {
             const li = document.createElement('li');
-            li.innerHTML = `<b>${item.question}</b> = ${item.answer} <span style="color:red">(${item.time.toFixed(1)}s)</span>`;
+            li.innerHTML = `<b>${item.question}</b> = ${item.answer} <span style="color:var(--danger)">(${item.time.toFixed(1)}s)</span>`;
             slowListEl.appendChild(li);
         });
     }
@@ -243,4 +234,26 @@ function endGame() {
 restartBtn.addEventListener('click', () => {
     statsModal.classList.add('hidden');
     setupScreen.classList.remove('hidden');
+});
+
+// --- DARK MODE LOGIC ---
+const themeBtn = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Carregar preferência salva
+if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark-mode');
+    themeBtn.innerText = '☀️';
+}
+
+themeBtn.addEventListener('click', () => {
+    body.classList.toggle('dark-mode');
+    
+    if (body.classList.contains('dark-mode')) {
+        themeBtn.innerText = '☀️';
+        localStorage.setItem('theme', 'dark');
+    } else {
+        themeBtn.innerText = '🌙';
+        localStorage.setItem('theme', 'light');
+    }
 });

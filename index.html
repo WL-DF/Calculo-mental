@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Math Trainer Pro</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <button id="theme-toggle" class="theme-btn" aria-label="Mudar Tema">🌙</button>
 
     <div id="setup-screen" class="card">
         <h1>🧠 Treino Mental</h1>
@@ -50,8 +52,7 @@
         <div class="section controls-section">
             <div class="control-block">
                 <h3>Meta (Opcional)</h3>
-                <input type="number" id="target-score" placeholder="Ex: 20 contas" class="full-input">
-                <small>Deixe vazio para modo infinito (Time Attack)</small>
+                <input type="number" id="target-score" placeholder="Modo Infinito" class="full-input">
             </div>
 
             <div class="control-block">
@@ -83,7 +84,7 @@
             <input type="number" id="answer-input" autocomplete="off" step="0.1" placeholder="?">
         </div>
         
-        <button id="stop-btn" class="outline-btn">Parar</button>
+        <button id="stop-btn" class="outline-btn">Parar / Desistir</button>
     </div>
 
     <div id="stats-modal" class="modal hidden">
@@ -95,7 +96,7 @@
                     <span class="stat-value" id="final-score">0</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-label">Velocidade Média</span>
+                    <span class="stat-label">Média/Conta</span>
                     <span class="stat-value" id="avg-speed">0s</span>
                 </div>
             </div>
