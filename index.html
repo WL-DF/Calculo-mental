@@ -3,123 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Trainer Pro</title>
+    <title>Math Trainer - Cybervibe</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <button id="theme-toggle" class="theme-btn" aria-label="Mudar Tema">🌙</button>
+    <button id="theme-toggle" class="theme-btn">🌙</button>
 
-    <div id="setup-screen" class="card">
-        <h1>🧠 Treino Mental</h1>
-
+    <div class="container" id="setup-screen">
+        <h1>Math Trainer</h1>
+        
         <div class="grid-layout">
-            <div class="section">
+            
+            <div>
                 <h3>Operações</h3>
                 <div class="checkbox-group">
-                    <label class="check-box"><input type="checkbox" id="op-add" checked> <span>+</span></label>
-                    <label class="check-box"><input type="checkbox" id="op-sub"> <span>−</span></label>
-                    <label class="check-box"><input type="checkbox" id="op-mul"> <span>×</span></label>
-                    <label class="check-box"><input type="checkbox" id="op-div"> <span>÷</span></label>
+                    <label class="check-box"><input type="checkbox" id="op-add" checked><span>+</span></label>
+                    <label class="check-box"><input type="checkbox" id="op-sub" checked><span>-</span></label>
+                    <label class="check-box"><input type="checkbox" id="op-mul" checked><span>×</span></label>
+                    <label class="check-box"><input type="checkbox" id="op-div" checked><span>÷</span></label>
+                </div>
+
+                <div id="div-advanced-options" class="hidden">
+                    <div class="advanced-option-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="broken-int-div">
+                            <div class="slider"></div>
+                        </label>
+                        <span class="label-text">Divisão Quebrada (> 1)</span>
+                    </div>
+
+                    <div class="advanced-option-row">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="inverse-div">
+                            <div class="slider"></div>
+                        </label>
+                        <span class="label-text">Divisão Inversa (< 1)</span>
+                    </div>
+
+                    <p class="input-note">
+                        ⚠️ <b>Regra dos Decimais:</b> Tanto para divisão Quebrada quanto Inversa, se der dízima (ex: 1,333...), digite apenas as <b>2 primeiras casas</b> (1,33).
+                    </p>
+                </div>
+            </div>
+
+            <div class="range-group">
+                <h3>Intervalo dos Números</h3>
+                <div class="input-wrapper">
+                    <input type="number" id="x-min" value="1"> <span>ATÉ</span> <input type="number" id="x-max" value="50">
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="y-min" value="1"> <span>ATÉ</span> <input type="number" id="y-max" value="50">
                 </div>
                 
-                <div id="div-advanced-options" class="advanced-opts hidden">
-                    <label id="label-broken" class="toggle-switch small-toggle">
-                        <input type="checkbox" id="broken-int-div">
-                        <span class="slider"></span>
-                        <span class="label-text">Divisão Quebrada (> 1)</span>
-                    </label>
-
-                    <label id="label-inverse" class="toggle-switch small-toggle">
-                        <input type="checkbox" id="inverse-div">
-                        <span class="slider"></span>
-                        <span class="label-text">Inverter Divisão (< 1)</span>
+                <div class="decimal-option">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="allow-decimals">
+                        <div class="slider"></div>
+                        <span>Usar Decimais na entrada (ex: 2.5 + 3.1)</span>
                     </label>
                 </div>
             </div>
 
-            <div class="section">
-                <h3>Intervalo dos Números</h3>
-                <div class="range-group">
-                    <div class="input-wrapper">
-                        <span>X:</span>
-                        <input type="number" id="x-min" value="1">
-                        <span class="sep">até</span>
-                        <input type="number" id="x-max" value="50">
-                    </div>
-                    <div class="input-wrapper">
-                        <span>Y:</span>
-                        <input type="number" id="y-min" value="1">
-                        <span class="sep">até</span>
-                        <input type="number" id="y-max" value="50">
+            <div class="controls-section">
+                <div class="control-block">
+                    <h3>Meta (Opcional)</h3>
+                    <input type="number" id="target-score" class="full-input" placeholder="Ex: 50 acertos">
+                </div>
+                <div class="control-block">
+                    <h3>Tempo</h3>
+                    <div class="timer-options">
+                        <button class="time-btn" data-time="30">30s</button>
+                        <button class="time-btn selected" data-time="60">1m</button>
+                        <button class="time-btn" data-time="300">5m</button>
+                        <button class="time-btn" data-time="99999">∞</button>
                     </div>
                 </div>
-                <label class="toggle-switch decimal-option">
-                    <input type="checkbox" id="allow-decimals">
-                    <span class="slider"></span>
-                    <span class="label-text">Usar Decimais na Entrada</span>
-                </label>
             </div>
+
+            <button id="start-btn" class="glow-btn">INICIAR TREINO</button>
         </div>
-
-        <div class="section controls-section">
-            <div class="control-block">
-                <h3>Meta (Opcional)</h3>
-                <input type="number" id="target-score" placeholder="Modo Infinito" class="full-input">
-            </div>
-
-            <div class="control-block">
-                <h3>Tempo Limite</h3>
-                <div class="timer-options">
-                    <button class="time-btn" data-time="30">30s</button>
-                    <button class="time-btn selected" data-time="60">60s</button>
-                    <button class="time-btn" data-time="300">5min</button>
-                    <button class="time-btn" data-time="99999">∞</button>
-                </div>
-            </div>
-        </div>
-
-        <button id="start-btn" class="glow-btn">INICIAR TREINO</button>
         <div class="footer-credit">by WL</div>
     </div>
 
-    <div id="game-screen" class="container hidden">
+    <div class="container hidden" id="game-screen">
+        <div class="hud">
+            <div class="hud-item">
+                <span>⏱️</span> <span id="time-left">60</span>
+            </div>
+            
+            <div class="hud-item">
+                <span>✅</span> 
+                <span id="score">0</span>
+                <span id="score-target" style="opacity:0.5; font-size:0.8em"></span>
+            </div>
+        </div>
+
         <div id="progress-container" class="hidden">
             <div id="progress-bar"></div>
         </div>
 
-        <div class="hud">
-            <div class="hud-item">⏱ <span id="time-left">00</span>s</div>
-            <div class="hud-item">✅ <span id="score">0</span><span id="score-target" class="faded"></span></div>
-        </div>
-
-        <div class="game-area">
-            <div id="question-display">Preparar...</div>
-            <input type="number" id="answer-input" autocomplete="off" step="0.01" placeholder="?">
-        </div>
+        <div id="question-display"></div>
         
-        <button id="stop-btn" class="outline-btn">Parar / Desistir</button>
+        <input type="text" id="answer-input" placeholder="?" inputmode="decimal" autocomplete="off">
+        
+        <button id="stop-btn" class="outline-btn">PARAR</button>
     </div>
 
     <div id="stats-modal" class="modal hidden">
         <div class="modal-content">
-            <h2>🎉 Treino Concluído!</h2>
+            <h2>Treino Finalizado!</h2>
             <div class="stats-grid">
                 <div class="stat-box">
                     <span class="stat-label">Acertos</span>
                     <span class="stat-value" id="final-score">0</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-label">Média/Conta</span>
+                    <span class="stat-label">Velocidade Média</span>
                     <span class="stat-value" id="avg-speed">0s</span>
                 </div>
             </div>
-            
-            <h3>🐌 Contas mais lentas (>5s):</h3>
+            <h3>Lentas ou Erradas (>5s)</h3>
             <ul id="slow-list"></ul>
-            
-            <button id="restart-btn" class="glow-btn">Novo Treino</button>
+            <button id="restart-btn" class="glow-btn">NOVO TREINO</button>
         </div>
     </div>
 

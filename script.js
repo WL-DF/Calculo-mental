@@ -131,8 +131,7 @@ document.getElementById('start-btn').addEventListener('click', () => {
 
 // --- Motor do Jogo ---
 
-// NOVA FUNÇÃO: PRÉ-CÁLCULO INTELIGENTE
-// Cria uma lista de todas as divisões possíveis dentro dos Ranges escolhidos
+// PRÉ-CÁLCULO INTELIGENTE (Para divisão padrão)
 function precomputeValidDivisions() {
     validDivisionPairs = [];
     
@@ -141,26 +140,21 @@ function precomputeValidDivisions() {
     const yMin = config.yRange[0];
     const yMax = config.yRange[1];
 
-    // Para cada denominador possível (Y)
     for (let d = yMin; d <= yMax; d++) {
-        if (d === 0) continue; // Evita divisão por zero
-
-        // Encontra o primeiro múltiplo de 'd' que está dentro do range X
-        // Ex: Se d=3 e X começa em 10, o primeiro múltiplo é 12.
+        if (d === 0) continue; 
+        
         let firstMult = Math.ceil(xMin / d) * d;
-        if (firstMult < xMin) firstMult += d; // Segurança
+        if (firstMult < xMin) firstMult += d; 
 
-        // Adiciona todos os múltiplos como numeradores válidos
         for (let n = firstMult; n <= xMax; n += d) {
-            // EVITAR RESULTADOS IGUAIS A 1 (X = Y)
-            // Só adiciona pares onde X != Y, exceto se a lista estiver muito vazia
+            // EVITAR RESULTADOS IGUAIS A 1 (exceto se inevitável)
             if (n !== d) {
                 validDivisionPairs.push({ num: n, den: d });
             }
         }
     }
     
-    // Se a filtragem "anti-1" removeu tudo (ex: range 1-1 e 1-1), permitimos o 1.
+    // Se a lista ficou vazia, permite X=Y
     if (validDivisionPairs.length === 0) {
         for (let d = yMin; d <= yMax; d++) {
             if (d !== 0 && d >= xMin && d <= xMax) {
@@ -221,7 +215,6 @@ function generateQuestion() {
     let x, y;
     
     // Gera X e Y padrão para +, -, *
-    // (A divisão usa lógica própria abaixo)
     if (op !== '/') {
         x = randomNum(config.xRange[0], config.xRange[1], config.decimals);
         y = randomNum(config.yRange[0], config.yRange[1], config.decimals);
@@ -270,22 +263,18 @@ function generateQuestion() {
             correctA = truncateToTwoDecimals(num / den);
             
         } else {
-            // --- MODO PADRÃO OTIMIZADO (SEM REPETIÇÃO DE 1) ---
-            
-            // Se tivermos pares pré-calculados válidos, usamos eles
+            // MODO PADRÃO OTIMIZADO (Usa lista pré-calculada)
             if (validDivisionPairs.length > 0) {
-                // Sorteia um índice aleatório da lista de pares válidos
                 const randomIndex = Math.floor(Math.random() * validDivisionPairs.length);
                 const pair = validDivisionPairs[randomIndex];
                 num = pair.num;
                 den = pair.den;
             } else {
-                // Fallback de emergência (se os ranges forem impossíveis, ex: X[2-3] Y[50-60])
+                // Fallback (se a lista estiver vazia por ranges ruins)
                 num = Math.floor(randomNum(config.xRange[0], config.xRange[1], false));
                 if (num === 0) num = 1;
-                den = num; // Vai dar 1, mas é melhor que travar
+                den = num; 
             }
-
             correctA = num / den;
         }
 
