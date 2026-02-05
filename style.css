@@ -15,24 +15,25 @@
     --success: #00b894;
     --danger: #ff7675;
     --accent: #0984e3;
+    --shadow: 0 20px 60px rgba(0,0,0,0.2);
 }
 
-/* --- MODO ESCURO (DARK MODE) --- */
+/* --- MODO ESCURO (CYBERVIBE) --- */
 body.dark-mode {
     --bg-gradient: linear-gradient(135deg, #0f2027 0%, #203a43 100%);
     --card-bg: #1e272e;
-    --primary: #a29bfe;
+    --primary: #a29bfe;  /* Roxo Neon Suave */
     --secondary: #74b9ff;
     --text: #dfe6e9;
     --text-light: #b2bec3;
 
-    /* Pedido: Fundo Azul Escuro + Texto Laranja */
-    --input-bg: #132535; 
+    /* AQUI ESTÁ A MÁGICA DE VOLTA */
+    --input-bg: #132535;   /* Azul Profundo */
     --input-border: #2c3e50;
-    --input-text: #ff9f43;
+    --input-text: #ff9f43; /* Laranja Neon */
 
     --danger: #ff6b6b;
-    --accent: #ff9f43;
+    --accent: #ff9f43; /* Detalhes em Laranja */
 }
 
 * { box-sizing: border-box; transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
@@ -66,7 +67,7 @@ body {
 /* Layout */
 .card, .container {
     background: var(--card-bg); padding: 2.5rem;
-    border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    border-radius: 20px; box-shadow: var(--shadow);
     width: 100%; max-width: 550px;
 }
 
@@ -100,7 +101,7 @@ h3 { color: var(--text-light); font-size: 0.9rem; text-transform: uppercase; let
 .input-wrapper input {
     border: none; background: transparent; width: 60px; text-align: center;
     font-size: 1.1rem; font-weight: 800; 
-    color: var(--input-text);
+    color: var(--input-text); /* Laranja no Dark Mode */
     border-bottom: 2px solid var(--input-border);
 }
 .input-wrapper input:focus { outline: none; border-bottom-color: var(--primary); }
@@ -150,16 +151,10 @@ h3 { color: var(--text-light); font-size: 0.9rem; text-transform: uppercase; let
 }
 .outline-btn:hover { border-color: var(--danger); color: var(--danger); background: rgba(255,0,0,0.05); }
 
-/* Footer Credit (by WL) */
+/* Footer Credit */
 .footer-credit {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-light);
-    opacity: 0.6;
-    letter-spacing: 1px;
-    user-select: none; /* Não deixa selecionar o texto para ficar com cara de app */
+    text-align: center; margin-top: 15px; font-size: 0.85rem;
+    font-weight: 600; color: var(--text-light); opacity: 0.6; letter-spacing: 1px;
 }
 
 /* Jogo */
@@ -167,8 +162,15 @@ h3 { color: var(--text-light); font-size: 0.9rem; text-transform: uppercase; let
 #question-display {
     font-size: 4rem; font-weight: 800; color: var(--secondary); 
     margin-bottom: 1rem; text-align: center;
+    min-height: 80px; display: flex; align-items: center; justify-content: center;
 }
 body.dark-mode #question-display { color: white; }
+
+/* ESTILO DA FRAÇÃO */
+.fraction { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; font-size: 0.7em; margin: 0 10px; }
+.numerator { border-bottom: 4px solid var(--secondary); padding-bottom: 2px; width: 100%; text-align: center; }
+body.dark-mode .numerator { border-bottom-color: var(--input-text); } /* Linha Laranja */
+.denominator { padding-top: 2px; width: 100%; text-align: center; }
 
 #answer-input {
     width: 100%; font-size: 3rem; text-align: center; border: none; 
@@ -202,3 +204,23 @@ body.dark-mode .stat-value { color: var(--primary); }
 
 #slow-list { text-align: left; max-height: 150px; overflow-y: auto; background: var(--input-bg); padding: 10px; list-style: none; border-radius: 10px; }
 #slow-list li { padding: 8px; border-bottom: 1px solid var(--input-border); font-size: 0.9rem; color: var(--text); }
+
+/* --- CORREÇÃO DE ALINHAMENTO MANUAL (OPÇÕES AVANÇADAS) --- */
+#div-advanced-options {
+    display: flex; flex-direction: column; justify-content: center;
+    width: fit-content; margin: 20px auto 0 auto; padding-top: 15px;
+    border-top: 1px dashed var(--input-border); gap: 15px; 
+}
+
+#label-broken, #label-inverse {
+    display: flex; align-items: center; justify-content: flex-start;
+    width: 100%; padding-left: 5px; 
+}
+
+.small-toggle .label-text {
+    font-size: 0.85rem; font-weight: 500; margin-left: 10px;
+    white-space: nowrap; text-align: left;
+}
+
+.small-toggle .slider { flex-shrink: 0; }
+.decimal-option { margin-top: 15px; }

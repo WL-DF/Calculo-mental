@@ -23,6 +23,20 @@
                     <label class="check-box"><input type="checkbox" id="op-mul"> <span>×</span></label>
                     <label class="check-box"><input type="checkbox" id="op-div"> <span>÷</span></label>
                 </div>
+                
+                <div id="div-advanced-options" class="advanced-opts hidden">
+                    <label id="label-broken" class="toggle-switch small-toggle">
+                        <input type="checkbox" id="broken-int-div">
+                        <span class="slider"></span>
+                        <span class="label-text">Divisão Quebrada (> 1)</span>
+                    </label>
+
+                    <label id="label-inverse" class="toggle-switch small-toggle">
+                        <input type="checkbox" id="inverse-div">
+                        <span class="slider"></span>
+                        <span class="label-text">Inverter Divisão (< 1)</span>
+                    </label>
+                </div>
             </div>
 
             <div class="section">
@@ -41,10 +55,10 @@
                         <input type="number" id="y-max" value="50">
                     </div>
                 </div>
-                <label class="toggle-switch">
+                <label class="toggle-switch decimal-option">
                     <input type="checkbox" id="allow-decimals">
                     <span class="slider"></span>
-                    <span class="label-text">Permitir Decimais</span>
+                    <span class="label-text">Usar Decimais na Entrada</span>
                 </label>
             </div>
         </div>
@@ -67,7 +81,6 @@
         </div>
 
         <button id="start-btn" class="glow-btn">INICIAR TREINO</button>
-        
         <div class="footer-credit">by WL</div>
     </div>
 
@@ -83,7 +96,7 @@
 
         <div class="game-area">
             <div id="question-display">Preparar...</div>
-            <input type="number" id="answer-input" autocomplete="off" step="0.1" placeholder="?">
+            <input type="number" id="answer-input" autocomplete="off" step="0.01" placeholder="?">
         </div>
         
         <button id="stop-btn" class="outline-btn">Parar / Desistir</button>
